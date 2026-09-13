@@ -23,11 +23,11 @@
 - [x] 3.2 Write `.github/workflows/release.yml`: on tags `v*`, `permissions: id-token: write`, a guard step that fails unless the tag equals `v` plus the pyproject version, `uv build`, then `pypa/gh-action-pypi-publish` pinned to a SHA. Verify YAML parses and all actions are SHA-pinned.
 - [x] 3.3 Write `.github/dependabot.yml` for ecosystems `uv` and `github-actions`, weekly. Verify YAML parses.
 - [x] 3.4 Write `.github/workflows/dependabot-automerge.yml`: on `pull_request` from `dependabot[bot]`, `dependabot/fetch-metadata` pinned to a SHA, and run `gh pr merge --auto --squash` only when `ghsa-id != ''` and `update-type == 'version-update:semver-patch'`. Verify YAML parses and the condition appears verbatim.
-- [ ] 3.5 Quality gate: `uv run pre-commit run --all-files` passes, commit the workflows, and verify the commit exists in `git log`.
+- [x] 3.5 Quality gate: `uv run pre-commit run --all-files` passes, commit the workflows, and verify the commit exists in `git log`.
 
 ## 4. README
 
-- [ ] 4.1 Write `README.md` with the one-line install `uv tool install attention-firewall`, the one-paragraph purpose from AGENTS.md, and contributor setup (`uv sync --locked`, `uv run pre-commit install`). Verify the file exists and every command in it has been run once in this session.
+- [x] 4.1 Write `README.md` with the one-line install `uv tool install attention-firewall`, the one-paragraph purpose from AGENTS.md, and contributor setup (`uv sync --locked`, `uv run pre-commit install`). Verify the file exists and every command in it has been run once in this session.
 - [ ] 4.2 Quality gate: `uv run pre-commit run --all-files` passes, commit, verify in `git log`.
 
 ## 5. Remote repository and verification
