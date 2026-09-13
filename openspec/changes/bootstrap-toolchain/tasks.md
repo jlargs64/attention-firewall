@@ -15,14 +15,14 @@
 - [x] 2.2 Generate the baseline with `uv run detect-secrets scan > .secrets.baseline` and verify the file is valid JSON with `python3 -c "import json;json.load(open('.secrets.baseline'))"`.
 - [x] 2.3 Add `.gitignore` for `.venv/`, `__pycache__/`, `.pytest_cache/`, `.coverage`, `dist/`. Verify `git status` does not list `.venv/`.
 - [x] 2.4 Install hooks with `uv run pre-commit install` and verify `.git/hooks/pre-commit` exists.
-- [ ] 2.5 Quality gate: `uv run pre-commit run --all-files` passes on the whole tree, then make the first commit with `git commit` (no `--no-verify`) and verify the hooks ran and the commit exists in `git log`.
+- [x] 2.5 Quality gate: `uv run pre-commit run --all-files` passes on the whole tree, then make the first commit with `git commit` (no `--no-verify`) and verify the hooks ran and the commit exists in `git log`.
 
 ## 3. GitHub Actions
 
-- [ ] 3.1 Write `.github/workflows/ci.yml`: on `push` and `pull_request`, checkout, `astral-sh/setup-uv` pinned to a full commit SHA, `uv sync --locked`, `uv run pre-commit run --all-files`. Verify the YAML parses with `python3 -c "import yaml;yaml.safe_load(open('.github/workflows/ci.yml'))"` and every `uses:` line ends in a 40-character SHA with a `# vX.Y.Z` comment.
-- [ ] 3.2 Write `.github/workflows/release.yml`: on tags `v*`, `permissions: id-token: write`, a guard step that fails unless the tag equals `v` plus the pyproject version, `uv build`, then `pypa/gh-action-pypi-publish` pinned to a SHA. Verify YAML parses and all actions are SHA-pinned.
-- [ ] 3.3 Write `.github/dependabot.yml` for ecosystems `uv` and `github-actions`, weekly. Verify YAML parses.
-- [ ] 3.4 Write `.github/workflows/dependabot-automerge.yml`: on `pull_request` from `dependabot[bot]`, `dependabot/fetch-metadata` pinned to a SHA, and run `gh pr merge --auto --squash` only when `ghsa-id != ''` and `update-type == 'version-update:semver-patch'`. Verify YAML parses and the condition appears verbatim.
+- [x] 3.1 Write `.github/workflows/ci.yml`: on `push` and `pull_request`, checkout, `astral-sh/setup-uv` pinned to a full commit SHA, `uv sync --locked`, `uv run pre-commit run --all-files`. Verify the YAML parses with `python3 -c "import yaml;yaml.safe_load(open('.github/workflows/ci.yml'))"` and every `uses:` line ends in a 40-character SHA with a `# vX.Y.Z` comment.
+- [x] 3.2 Write `.github/workflows/release.yml`: on tags `v*`, `permissions: id-token: write`, a guard step that fails unless the tag equals `v` plus the pyproject version, `uv build`, then `pypa/gh-action-pypi-publish` pinned to a SHA. Verify YAML parses and all actions are SHA-pinned.
+- [x] 3.3 Write `.github/dependabot.yml` for ecosystems `uv` and `github-actions`, weekly. Verify YAML parses.
+- [x] 3.4 Write `.github/workflows/dependabot-automerge.yml`: on `pull_request` from `dependabot[bot]`, `dependabot/fetch-metadata` pinned to a SHA, and run `gh pr merge --auto --squash` only when `ghsa-id != ''` and `update-type == 'version-update:semver-patch'`. Verify YAML parses and the condition appears verbatim.
 - [ ] 3.5 Quality gate: `uv run pre-commit run --all-files` passes, commit the workflows, and verify the commit exists in `git log`.
 
 ## 4. README
