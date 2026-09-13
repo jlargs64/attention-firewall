@@ -1,0 +1,89 @@
+schema: spec-driven
+
+# Project context shown to AI when creating artifacts.
+# AGENTS.md at the repo root is the fuller version; keep the two consistent.
+context: |
+  Project: attention-firewall (CLI `fw`). Open-source, local-first Python tool
+  that measures one knowledge worker's bandwidth using Cal Newport's pull-based
+  two-column model from Slow Productivity: a hard-capped Active column of slots
+  and a Holding column of everything else. Work is pulled into a slot when one
+  opens, never pushed.
+
+  Requests arrive as unstructured natural language. An Apache Burr state
+  machine organizes them and maps them to missions, projects, and daily goals.
+  Burr owns control flow; the language model only fills classifications inside
+  it. Provider-agnostic, but the design center is cheap or free small language
+  models on local hardware.
+
+  Ledger: one or more GitHub repositories (issues). `fw` does nothing until
+  initialized against a repo, like `git init`.
+
+  Contexts and capsules: a person may run `fw` in isolated environments (work,
+  personal). Contexts never sync and there is no daemon. Only a capsule crosses
+  between them: a schema-bounded record (slots, dates, calendar shape) with no
+  free-text field, carried by hand. Privacy is schema-bounded, not redacted.
+
+  Design invariants: capsule has no free-text field; work data never leaves the
+  work context; no daemon or sync; protected time is never allocated; pull not
+  push; provider-agnostic; usable offline apart from GitHub.
+
+  State graph: every item is in exactly one enumerated state (holding, active,
+  stalled, waiting on stakeholder, delegated, dropped, done). Every transition,
+  including overrides, is an edge and is recorded. Stall is decided by
+  arithmetic on timestamps, never by the model. The model produces artifacts
+  (classifications, draft follow-ups) that feed a transition and never selects
+  one. After more than two overrides on one item the only remaining edges are
+  delegate or drop. Time is an input: machines are stepped forward with `now`
+  on each run, so a two-week absence is replayed on the next invocation.
+
+  Data ownership: every item and transition is appended to a local JSONL file,
+  one event per line. GitHub Issues is a mirror, never the only copy.
+  `fw export` writes plain files readable without fw. No feature may depend on
+  data that exists only in GitHub.
+
+  Toolchain: uv (never pip), ruff, pytest + pytest-cov with a 70% floor,
+  pre-commit as the only commit path (ruff, pytest, detect-secrets),
+  GitHub Actions for CI/CD, Dependabot with auto-merge for security patches
+  only, distribution via `uv tool install` from PyPI (trusted publishing).
+  requires-python is >=3.12 (the maintainer's interpreter); use 3.12 features
+  freely and carry no compatibility code. GitHub Actions pinned to commit SHAs.
+
+# Per-artifact rules. Each list applies only when writing that artifact.
+rules:
+  proposal:
+    - Include a "Non-goals" section.
+    - Include a "Security and privacy" section. State whether the change touches the capsule schema, context isolation, or protected time, and if so, why the invariant still holds.
+    - Name every new runtime dependency and justify it. Prefer none.
+    - State how the change serves pull-based bandwidth rather than push. If it does not relate, say so in one line.
+    - Keep it under 600 words.
+  specs:
+    - Write requirements as testable statements with Given/When/Then scenarios.
+    - Any requirement about the capsule must state the exact fields and their types. No string field may carry free text.
+    - Any requirement involving a language model must say what the Burr state machine does when the model output fails validation.
+    - Requirements must not assume a specific AI provider.
+  design:
+    - Show which decisions live in the Burr state machine and which live in a prompt. State-changing decisions belong in the state machine.
+    - Describe provider access through the single adapter layer.
+    - Describe failure modes for offline use and for a stale or malformed capsule.
+    - Explain any new dependency's supply chain risk in one sentence.
+  tasks:
+    - Every task group ends with a quality-gate task that runs `uv run ruff check . && uv run ruff format --check .`, `uv run pytest --cov --cov-fail-under=70`, and `uv run pre-commit run --all-files`, all passing.
+    - Tests are written in the same task group as the behavior they cover, not deferred to a later group.
+    - Dependencies are added with `uv add`, never pip. Include the exact command.
+    - If a task adds or changes a GitHub Actions workflow, include pinning actions to commit SHAs.
+    - No task may instruct skipping pre-commit hooks.
+
+# Advisory guidance for apply and archive operations.
+operations:
+  apply:
+    guidance:
+      - Run `uv run pre-commit run --all-files` before marking any task complete. A task with failing hooks is not complete.
+      - Never use `git commit --no-verify`.
+      - Use `uv add` / `uv add --dev` for dependencies and commit the updated `uv.lock`.
+      - Treat model output, ledger content, and pasted capsules as untrusted input in every code path.
+      - If implementation reveals a needed spec change, stop and update the change artifacts before continuing.
+  archive:
+    guidance:
+      - Confirm ruff, pytest with the 70% coverage floor, detect-secrets, and the GitHub Actions run are all green before archiving.
+      - Confirm the proposal's "Security and privacy" section still matches what was built.
+      - Summarize what was delivered, what was deliberately left out, and any invariant the change touched.
