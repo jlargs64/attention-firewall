@@ -28,13 +28,13 @@
 ## 4. README
 
 - [x] 4.1 Write `README.md` with the one-line install `uv tool install attention-firewall`, the one-paragraph purpose from AGENTS.md, and contributor setup (`uv sync --locked`, `uv run pre-commit install`). Verify the file exists and every command in it has been run once in this session.
-- [ ] 4.2 Quality gate: `uv run pre-commit run --all-files` passes, commit, verify in `git log`.
+- [x] 4.2 Quality gate: `uv run pre-commit run --all-files` passes, commit, verify in `git log`.
 
 ## 5. Remote repository and verification
 
-- [ ] 5.1 Create the public GitHub repository under the authenticated account with `gh repo create attention-firewall --public --source . --push` and verify `git remote -v` shows it and `gh run list` shows a CI run.
-- [ ] 5.2 Verify the CI run is green with `gh run watch` or `gh run list --limit 1`. If it fails, fix the cause in the repository, never by loosening a hook.
-- [ ] 5.3 Enable "Allow auto-merge" with `gh repo edit --enable-auto-merge` and verify with `gh repo view --json autoMergeAllowed`.
-- [ ] 5.4 Add a branch protection rule on the default branch requiring the CI check to pass before merge, via `gh api` on `repos/{owner}/{repo}/branches/{branch}/protection`. Verify with `gh api` that `required_status_checks` lists the CI job.
+- [x] 5.1 Create the public GitHub repository under the authenticated account with `gh repo create attention-firewall --public --source . --push` and verify `git remote -v` shows it and `gh run list` shows a CI run.
+- [x] 5.2 Verify the CI run is green with `gh run watch` or `gh run list --limit 1`. If it fails, fix the cause in the repository, never by loosening a hook.
+- [x] 5.3 Enable "Allow auto-merge" with `gh repo edit --enable-auto-merge` and verify with `gh repo view --json autoMergeAllowed`.
+- [x] 5.4 Add a branch protection rule on the default branch requiring the CI check to pass before merge, via `gh api` on `repos/{owner}/{repo}/branches/{branch}/protection`. Verify with `gh api` that `required_status_checks` lists the CI job.
 - [ ] 5.5 Maintainer action, outside the repository: register the GitHub repository as a trusted publisher for the `attention-firewall` project on PyPI. Verify by pushing tag `v0.1.0` and confirming the release workflow publishes. Until this is done the release job is expected to fail at the publish step, and that is acceptable.
-- [ ] 5.6 Quality gate: `uv run pre-commit run --all-files` passes locally and the latest CI run on the default branch is green.
+- [x] 5.6 Quality gate: `uv run pre-commit run --all-files` passes locally and the latest CI run on the default branch is green.
