@@ -36,5 +36,5 @@
 - [x] 5.2 Verify the CI run is green with `gh run watch` or `gh run list --limit 1`. If it fails, fix the cause in the repository, never by loosening a hook.
 - [x] 5.3 Enable "Allow auto-merge" with `gh repo edit --enable-auto-merge` and verify with `gh repo view --json autoMergeAllowed`.
 - [x] 5.4 Add a branch protection rule on the default branch requiring the CI check to pass before merge, via `gh api` on `repos/{owner}/{repo}/branches/{branch}/protection`. Verify with `gh api` that `required_status_checks` lists the CI job.
-- [ ] 5.5 Maintainer action, outside the repository: register the GitHub repository as a trusted publisher for the `attention-firewall` project on PyPI. Verify by pushing tag `v0.1.0` and confirming the release workflow publishes. Until this is done the release job is expected to fail at the publish step, and that is acceptable.
+- [x] 5.5 Maintainer action, outside the repository: register the GitHub repository as a trusted publisher for the `attention-firewall` project on PyPI. Verify by pushing tag `v0.1.0` and confirming the release workflow publishes. Until this is done the release job is expected to fail at the publish step, and that is acceptable.
 - [x] 5.6 Quality gate: `uv run pre-commit run --all-files` passes locally and the latest CI run on the default branch is green.
