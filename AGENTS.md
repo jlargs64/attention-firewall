@@ -84,6 +84,8 @@ privacy model: schema-bounded, not redacted.
 
 - Every commit runs through pre-commit. Never use `git commit --no-verify` or
   otherwise skip hooks. If a hook fails, fix the cause.
+- New changes land through pull requests, never by pushing to `main`
+  directly. Agents do not commit or push without the maintainer's go-ahead.
 - Do not commit if `uv run pytest` fails or coverage is below 70%.
 - Do not commit secrets, tokens, `.env` files, or real capsule data from a work
   context. If `detect-secrets` flags something real, rotate it.
