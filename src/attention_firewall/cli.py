@@ -366,7 +366,7 @@ def _fail(code: int, message: str, as_json: bool) -> None:
 
 
 def main(argv: list[str] | None = None) -> None:
-    argv = sys.argv[1:] if argv is None else list(argv) or ["--help"]  # bare `fw` shows help
+    argv = list(sys.argv[1:] if argv is None else argv) or ["--help"]  # bare `fw` shows help
     as_json = "--json" in argv
     env = os.environ
     try:

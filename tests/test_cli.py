@@ -69,6 +69,8 @@ def test_bare_fw_prints_help(capsys: pytest.CaptureFixture[str]) -> None:
     code, out, err = run([], capsys)
     assert (code, err) == (0, "")
     assert out.startswith("usage: fw") and "    skill " in out
+    proc = subprocess.run(["fw"], capture_output=True, text=True, check=True)
+    assert proc.stdout.startswith("usage: fw")
 
 
 def test_help_names_every_command(capsys: pytest.CaptureFixture[str]) -> None:
