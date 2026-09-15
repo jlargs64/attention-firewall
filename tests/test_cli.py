@@ -65,6 +65,12 @@ def test_fw_console_script() -> None:
     assert result.stdout.strip() == version("attention-firewall")
 
 
+def test_bare_fw_prints_help(capsys: pytest.CaptureFixture[str]) -> None:
+    code, out, err = run([], capsys)
+    assert (code, err) == (0, "")
+    assert out.startswith("usage: fw") and "    skill " in out
+
+
 def test_help_names_every_command(capsys: pytest.CaptureFixture[str]) -> None:
     code, out, _ = run(["--help"], capsys)
     assert code == 0

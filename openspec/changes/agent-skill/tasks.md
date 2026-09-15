@@ -14,5 +14,5 @@
 ## 3. Docs and PR
 
 - [x] 3.1 Add an "Install the skill" paragraph to the README's "Calling fw from an agent" section covering `fw skill install`, `--project`, `--dir`, and `npx skills add <owner>/attention-firewall`. Verify by running the documented `fw skill install --dir` command against a scratch directory.
-- [ ] 3.2 Open a pull request from `agent-skill` to `main` with the proposal's "Security and privacy" section in the description and verify the `gate` check is green. Do not merge; the maintainer reviews.
+- [x] 3.2 Open a pull request from `agent-skill` to `main` with the proposal's "Security and privacy" section in the description and verify the `gate` check is green. Do not merge; the maintainer reviews.
 - [x] 3.3 Quality gate: `uv run ruff check . && uv run ruff format --check .`, `uv run pytest --cov --cov-fail-under=70`, and `uv run pre-commit run --all-files` all pass.
